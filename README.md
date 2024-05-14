@@ -7,7 +7,7 @@
 Vuisiness
 </h2>
 <h5>
-내 주변 상권과 관련한 통계 데이터를 보여주는 서비스
+사용자의 주변 상권과 관련한 통계 데이터를 보여주는 서비스
 </h5>
 <a href="https://youtube.com/shorts/6wWa0688CdI">시연 영상</a>
 <br />

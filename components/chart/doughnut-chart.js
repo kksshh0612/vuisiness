@@ -1,7 +1,15 @@
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-export default function DoughnutChart() {
+Chart.register(ChartDataLabels);
+
+export default function DoughnutChart({
+  labels,
+  labelName,
+  doughnutData,
+  unit,
+}) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -15,28 +23,42 @@ export default function DoughnutChart() {
       const newChart = new Chart(context, {
         type: "doughnut",
         data: {
-          labels: ["John", "Jane", "Doe"],
+          labels: labels,
           datasets: [
             {
-              label: "Info",
-              data: [34, 64, 23],
+              label: labelName,
+              data: doughnutData,
               backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-                "rgba(255, 205, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(201, 203, 207, 0.2)",
+                "rgba(255, 0, 0, 0.8)",
+                "rgba(255, 125, 32, 0.8)",
+                "rgba(255, 205, 86, 0.8)",
+                "rgba(25, 159, 64, 0.8)",
+                "rgba(0, 0, 255, 0.8)",
+                "rgba(153, 102, 255, 0.8)",
+                "rgba(201, 203, 207, 0.8)",
+                "rgba(75, 192, 192, 0.8)",
+                "rgba(255, 9, 132, 0.8)",
+                "rgba(255, 105, 86, 0.8)",
+                "rgba(75, 92, 192, 0.8)",
+                "rgba(200, 62, 135, 0.8)",
+                "rgba(153, 102, 155, 0.8)",
+                "rgba(201, 203, 107, 0.8)",
               ],
               borderColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-                "rgba(255, 205, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(201, 203, 207, 0.2)",
+                "rgba(255, 0, 0, 1)",
+                "rgba(255, 125, 32, 1)",
+                "rgba(255, 205, 86, 1)",
+                "rgba(25, 159, 64, 1)",
+                "rgba(0, 0, 255, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(201, 203, 207, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(255, 9, 132, 1)",
+                "rgba(255, 105, 86, 1)",
+                "rgba(75, 92, 192, 1)",
+                "rgba(200, 62, 135, 1)",
+                "rgba(153, 102, 155, 1)",
+                "rgba(201, 203, 107, 1)",
               ],
               borderWidth: 1,
             },
@@ -44,12 +66,29 @@ export default function DoughnutChart() {
         },
         options: {
           responsive: true,
+          plugins: {
+            datalabels: {
+              color: "#fff",
+              anchor: "end",
+              align: "start",
+              offset: 10,
+              borderRadius: 4,
+              backgroundColor: function (context) {
+                return context.dataset.backgroundColor;
+              },
+              formatter: (value, context) => {
+                return `${
+                  context.chart.data.labels[context.dataIndex]
+                }: ${value} ${unit}`;
+              },
+            },
+          },
         },
       });
 
       chartRef.current.chart = newChart;
     }
-  }, []);
+  }, [doughnutData]);
 
   return (
     <div style={{ position: "relative", width: "90vw", height: "80vh" }}>

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
 
-export default function LineChart() {
+export default function LineChart({ labels, label, data }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -15,13 +15,14 @@ export default function LineChart() {
       const newChart = new Chart(context, {
         type: "line",
         data: {
-          labels: ["1", "2", "3", "4", "5", "6", "7"],
+          labels,
           datasets: [
             {
-              label: "My First Dataset",
-              data: [65, 59, 80, 81, 56, 55, 40],
+              label,
+              data,
               fill: false,
-              borderColor: "rgb(75, 192, 192)",
+              backgroundColor: "rgba(75, 192, 192, 0.8)",
+              borderColor: "rgb(75, 192, 192, 1)",
               tension: 0.1,
             },
           ],
@@ -41,7 +42,7 @@ export default function LineChart() {
 
       chartRef.current.chart = newChart;
     }
-  }, []);
+  }, [labels, label, data]);
 
   return (
     <div style={{ position: "relative", width: "90vw", height: "80vh" }}>

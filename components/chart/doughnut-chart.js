@@ -4,12 +4,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 Chart.register(ChartDataLabels);
 
-export default function DoughnutChart({
-  labels,
-  labelName,
-  doughnutData,
-  unit,
-}) {
+export default function DoughnutChart({ labels, label, data, unit }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -23,11 +18,11 @@ export default function DoughnutChart({
       const newChart = new Chart(context, {
         type: "doughnut",
         data: {
-          labels: labels,
+          labels,
           datasets: [
             {
-              label: labelName,
-              data: doughnutData,
+              label,
+              data,
               backgroundColor: [
                 "rgba(255, 0, 0, 0.8)",
                 "rgba(255, 125, 32, 0.8)",
@@ -64,15 +59,19 @@ export default function DoughnutChart({
             },
           ],
         },
+        // 차트 위 텍스트 관련 설정
         options: {
           responsive: true,
           plugins: {
             datalabels: {
+              font: {
+                size: 16,
+              },
               color: "#fff",
-              anchor: "end",
-              align: "start",
-              offset: 10,
-              borderRadius: 4,
+              anchor: "middle",
+              align: "middle",
+              offset: 5,
+              borderRadius: 8,
               backgroundColor: function (context) {
                 return context.dataset.backgroundColor;
               },
@@ -88,10 +87,10 @@ export default function DoughnutChart({
 
       chartRef.current.chart = newChart;
     }
-  }, [doughnutData]);
+  }, [label, labels, data, unit]);
 
   return (
-    <div style={{ position: "relative", width: "90vw", height: "80vh" }}>
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
       <canvas ref={chartRef} />
     </div>
   );

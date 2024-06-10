@@ -1,7 +1,10 @@
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-export default function RadarChart() {
+Chart.register(ChartDataLabels);
+
+export default function RadarChart({ labels, label, data }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -15,48 +18,49 @@ export default function RadarChart() {
       const newChart = new Chart(context, {
         type: "radar",
         data: {
-          labels: [
-            "Eating",
-            "Drinking",
-            "Sleeping",
-            "Designing",
-            "Coding",
-            "Cycling",
-            "Running",
-          ],
+          labels,
           datasets: [
             {
-              label: "My First Dataset",
-              data: [65, 59, 90, 81, 56, 55, 40],
+              label,
+              data,
               fill: true,
-              backgroundColor: "rgba(255, 99, 132, 0.2)",
-              borderColor: "rgb(255, 99, 132)",
+              backgroundColor: "rgba(255, 99, 132, 0.8)",
+              borderColor: "rgb(255, 99, 132, 1)",
               pointBackgroundColor: "rgb(255, 99, 132)",
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: "rgb(255, 99, 132)",
             },
-            {
-              label: "My Second Dataset",
-              data: [28, 48, 40, 19, 96, 27, 100],
-              fill: true,
-              backgroundColor: "rgba(54, 162, 235, 0.2)",
-              borderColor: "rgb(54, 162, 235)",
-              pointBackgroundColor: "rgb(54, 162, 235)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgb(54, 162, 235)",
-            },
           ],
         },
         options: {
           responsive: true,
+          plugins: {
+            datalabels: {
+              font: {
+                size: 16,
+              },
+              color: "#fff",
+              anchor: "center",
+              align: "end",
+              offset: 5,
+              borderRadius: 8,
+              backgroundColor: function (context) {
+                return context.dataset.backgroundColor;
+              },
+              formatter: (value, context) => {
+                return `${
+                  context.chart.data.labels[context.dataIndex]
+                }: ${value}`;
+              },
+            },
+          },
         },
       });
 
       chartRef.current.chart = newChart;
     }
-  }, []);
+  }, [labels, label, data]);
 
   return (
     <div style={{ position: "relative", width: "90vw", height: "80vh" }}>

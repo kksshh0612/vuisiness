@@ -12,6 +12,12 @@ const consumptionTrendSchema = new mongoose.Schema({
   건수지표: Number,
 });
 
+consumptionTrendSchema.index({
+  광역시도명: 1,
+  시군구명: 1,
+  가맹점업종분류명_대: 1,
+});
+
 const ConsumptionTrendModel =
   models.ConsumptionTrend ||
   model("ConsumptionTrend", consumptionTrendSchema, "consumptiontrends");

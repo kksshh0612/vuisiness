@@ -1,7 +1,4 @@
-import { hangjeongDongState, nearbyStoresState } from "@/atoms";
-import { concatHangjeongDongName } from "@/utils/concat-hangjeong-dong-name";
-import React, { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import React, { useState } from "react";
 
 // 근처 상점 데이터를 props로 받아서 대분류명, 소분류명을 보여주는 컴포넌트
 export default function CategoryList({ nearbyComDistrict }) {

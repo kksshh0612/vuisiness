@@ -34,7 +34,7 @@ export default function TopCommercialDistrictChart() {
 
   return (
     <section className={"PopulationChartWrapper w-full overflow-auto"}>
-      <label className={"my-3 font-semibold text-[1.2rem]"}>
+      <label className={"my-4 font-semibold text-[1.2rem]"}>
         {concatHangjeongDongName(hangjeongDong)}의 인기 업종
       </label>
       <div className="w-full flex flex-col items-center gap-1">

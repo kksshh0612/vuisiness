@@ -13,6 +13,7 @@ const consumptionTrendSchema = new mongoose.Schema({
 });
 
 const ConsumptionTrendModel =
-  models.ConsumptionTrend || model("consumptionTrend", consumptionTrendSchema);
+  models.ConsumptionTrend ||
+  model("ConsumptionTrend", consumptionTrendSchema, "consumptiontrends");
 
 export default ConsumptionTrendModel;

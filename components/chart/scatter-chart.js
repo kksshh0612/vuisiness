@@ -1,7 +1,11 @@
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-export default function ScatterChart() {
+Chart.register(ChartDataLabels);
+
+// 산점도 차트
+export default function ScatterChart({ labels, label, data }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -15,25 +19,42 @@ export default function ScatterChart() {
       const newChart = new Chart(context, {
         type: "scatter",
         data: {
-          labels: ["1", "2", "3"],
           datasets: [
             {
-              label: "Info",
-              data: [34, 64, 23],
-              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-              borderColor: ["rgba(201, 203, 207, 0.2)"],
-              borderWidth: 1,
+              label,
+              data: data.map((point, index) => ({
+                x: point.x,
+                y: point.y,
+                label: labels[index],
+              })),
+              backgroundColor: "rgb(255, 99, 132)",
             },
           ],
         },
         options: {
           responsive: true,
+          plugins: {
+            datalabels: {
+              align: "end",
+              anchor: "end",
+              formatter: (value, context) =>
+                context.dataset.data[context.dataIndex].label,
+            },
+          },
           scales: {
             x: {
-              type: "category",
+              type: "linear",
+              title: {
+                display: true,
+                text: "식당 갯수",
+              },
             },
             y: {
               beginAtZero: true,
+              title: {
+                display: true,
+                text: "매출",
+              },
             },
           },
         },
@@ -41,10 +62,10 @@ export default function ScatterChart() {
 
       chartRef.current.chart = newChart;
     }
-  }, []);
+  }, [data, labels, label]);
 
   return (
-    <div style={{ position: "relative", width: "90vw", height: "80vh" }}>
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
       <canvas ref={chartRef} />
     </div>
   );

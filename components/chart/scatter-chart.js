@@ -1,8 +1,7 @@
+"use client";
+
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
-Chart.register(ChartDataLabels);
 
 // 산점도 차트
 export default function ScatterChart({ labels, label, data }) {
@@ -25,7 +24,7 @@ export default function ScatterChart({ labels, label, data }) {
               data: data.map((point, index) => ({
                 x: point.x,
                 y: point.y,
-                label: labels[index],
+                customLabel: labels[index], // 레이블을 데이터에 추가
               })),
               backgroundColor: "rgb(255, 99, 132)",
             },
@@ -33,28 +32,32 @@ export default function ScatterChart({ labels, label, data }) {
         },
         options: {
           responsive: true,
-          plugins: {
-            datalabels: {
-              align: "end",
-              anchor: "end",
-              formatter: (value, context) =>
-                context.dataset.data[context.dataIndex].label,
-            },
-          },
           scales: {
             x: {
               type: "linear",
               title: {
                 display: true,
-                text: "식당 갯수",
+                text: "식당 개수",
               },
             },
             y: {
               beginAtZero: true,
               title: {
                 display: true,
-                text: "매출",
+                text: "카드 매출량",
               },
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.raw.customLabel; // 호버 시 레이블 표시
+                },
+              },
+            },
+            datalabels: {
+              display: false, // 기본적으로 데이터 레이블을 표시하지 않음
             },
           },
         },

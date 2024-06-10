@@ -25,6 +25,9 @@ const populationSchema = new mongoose.Schema({
   요일: String,
 });
 
+// 행정동코드에 인덱스 추가
+populationSchema.index({ 행정동코드: 1 });
+
 const PopulationModel =
   models.Population || model("Population", populationSchema, "populations");
 

@@ -22,6 +22,7 @@ const commercialDistrictSchema = new mongoose.Schema({
 // geoNear 쿼리를 위한 인덱스 생성
 commercialDistrictSchema.index({ location: "2dsphere" });
 commercialDistrictSchema.index({ 행정동코드: 1 });
+commercialDistrictSchema.index({ 시도명: 1, 시군구명: 1 });
 
 const CommercialDistrictModel =
   models.CommercialDistrict ||

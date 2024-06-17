@@ -73,7 +73,7 @@
 | 해당 행정구역 내 요일별 시간대별(0시~23시) 생활 인구 수 변화 분석  
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/66912850-200a-4ca3-9808-97f887ec90a1)
+![image](https://s6.ezgif.com/tmp/ezgif-6-83a93ed66b.gif)
 
 <details>
   <summary>Query</summary>
@@ -140,7 +140,7 @@
 | 해당 행정구역 내 특정 요일, 시간대 기준 생활 인구 수 변화 분석  
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/64324ea7-ced8-490f-b585-ce8c9a2a21b6)
+![image](https://s6.ezgif.com/tmp/ezgif-6-0fac8245d4.gif)
 
 <details>
   <summary>Query</summary>
@@ -299,7 +299,7 @@
 | 해당 시군구 내 특정 성별, 연령대 별 카드 사용 금액 상위 분류 파악 및 비교 
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/0dac9498-2879-4dad-84c2-db3e7f9fde26)
+![image](https://s6.ezgif.com/tmp/ezgif-6-5d858f3d4e.gif)
 
 <details>
   <summary>Query</summary>
@@ -358,7 +358,7 @@
 | 해당 시군구 내 업종 별 상가 수 파악을 통한 인기 업종 추론  
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/e9d409a7-0e1e-4352-8158-0f56153b9931)
+![image](https://s6.ezgif.com/tmp/ezgif-6-fea3064910.gif)
 
 <details>
   <summary>Query</summary>
@@ -409,7 +409,7 @@
 | 해당 행정구역 내 평일 점심 가장 많은 생활인구의 카드 매출을 바탕으로 인기가 많을 것으로 예상되는 식당 추론  
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/30704621-db37-4902-810b-63e92d3e51f1)
+![image](https://s6.ezgif.com/tmp/ezgif-6-f0fd07b0ba.gif)
 
 <details>
   <summary>Query</summary>
@@ -759,7 +759,8 @@ ageCode:1,
 | 평일 대비 주말 생활 인구 변화폭이 큰 행정동 내 숙박업 현황 분석  
 <br/> 
 
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/ba9da42e-2843-4da7-ad6d-243d13866f6f)
+![image](https://s6.ezgif.com/tmp/ezgif-6-4c6972241e.gif)
+
 
 <details>
   <summary>Query</summary>
@@ -963,8 +964,7 @@ ageCode:1,
 ## 시군구 내 식당 경쟁분석 및 기회 포착
 | 해당 시군구 내 식당 소비 데이터와 상권 데이터 분석을 바탕으로 어떤 종류의 식당이 높은 매출을 올리는지 파악  
 <br/> 
-
-![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/1eace125-9138-4ff4-ab40-0d549b46b94b)
+![image](https://s6.ezgif.com/tmp/ezgif-6-fb63539b8d.gif)
 
 
 #

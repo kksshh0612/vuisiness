@@ -73,7 +73,9 @@
 | 해당 행정구역 내 요일별 시간대별(0시~23시) 생활 인구 수 변화 분석  
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-83a93ed66b.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-83a93ed66b.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/a92e626d-3de8-4a5d-be7a-2a3740840c0f)  
+
 
 <details>
   <summary>Query</summary>
@@ -140,7 +142,9 @@
 | 해당 행정구역 내 특정 요일, 시간대 기준 생활 인구 수 변화 분석  
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-0fac8245d4.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-0fac8245d4.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/fb477ed7-bce7-40ed-9743-2146e2835491)
+
 
 <details>
   <summary>Query</summary>
@@ -299,7 +303,9 @@
 | 해당 시군구 내 특정 성별, 연령대 별 카드 사용 금액 상위 분류 파악 및 비교 
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-5d858f3d4e.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-5d858f3d4e.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/d86aaf3b-5773-47fd-984b-b621708745c4)
+
 
 <details>
   <summary>Query</summary>
@@ -358,7 +364,9 @@
 | 해당 시군구 내 업종 별 상가 수 파악을 통한 인기 업종 추론  
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-fea3064910.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-fea3064910.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/272196bf-680e-4963-b830-72f9ec8b2cbe)
+
 
 <details>
   <summary>Query</summary>
@@ -409,7 +417,9 @@
 | 해당 행정구역 내 평일 점심 가장 많은 생활인구의 카드 매출을 바탕으로 인기가 많을 것으로 예상되는 식당 추론  
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-f0fd07b0ba.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-f0fd07b0ba.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/f2b9ced6-4f4a-4f19-9bba-d7b6826930f5)
+
 
 <details>
   <summary>Query</summary>
@@ -759,7 +769,9 @@ ageCode:1,
 | 평일 대비 주말 생활 인구 변화폭이 큰 행정동 내 숙박업 현황 분석  
 <br/> 
 
-![image](https://s6.ezgif.com/tmp/ezgif-6-4c6972241e.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-4c6972241e.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/43020e7a-597c-4fe7-a33a-ba1824bc103b)
+
 
 
 <details>
@@ -964,7 +976,8 @@ ageCode:1,
 ## 시군구 내 식당 경쟁분석 및 기회 포착
 | 해당 시군구 내 식당 소비 데이터와 상권 데이터 분석을 바탕으로 어떤 종류의 식당이 높은 매출을 올리는지 파악  
 <br/> 
-![image](https://s6.ezgif.com/tmp/ezgif-6-fb63539b8d.gif)
+![image](https://s6.ezgif.com/tmp/ezgif-6-fb63539b8d.gif)  
+![image](https://github.com/wonil-programmer/vuisiness/assets/74577811/4dd005c7-83e1-42ef-88a3-9259ffecf2ac)
 
 
 #

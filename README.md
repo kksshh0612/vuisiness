@@ -29,43 +29,50 @@
   ```sql
   
   db.commercialdistricts.aggregate([
-  {
-    $match: {
-      행정동코드: 11650621 //중문
-    }
-  },
-  {
-    $group: {
-      _id: {
-        largeCategory: "$상권업종대분류명",
-        smallCategory: "$상권업종소분류명"
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [127.4584, 36.63273],  //중문 삼춘네 삼겹살 경도, 위도
+          },
+          distanceField: "distance",
+          maxDistance: 100,
+          spherical: true,
+        }
       },
-      stores: {
-        $push: {
-          storeName: "$상호명",
-          cityName: "$시도명",
-          provinceCode: "$시군구코드",
-          provinceName: "$시군구명",
-          administrativeDistrictCode: "$행정동코드",
-          administrativeDistrictName: "$행정동명",
-          roadAddress: "$도로명주소",
-          location: "$location.coordinates"
+      {
+        $group: {
+          _id: {
+            largeCategory: "$상권업종대분류명",
+            smallCategory: "$상권업종소분류명",
+          },
+          stores: {
+            $push: {
+              storeName: "$상호명",
+              provinceName: "$시도명",
+              cityCode: "$시군구코드",
+              cityName: "$시군구명",
+              administrativeDistrictCode: "$행정동코드",
+              administrativeDistrictName: "$행정동명",
+              roadAddress: "$도로명주소",
+              location: "$location.coordinates",
+              distance: "$distance",
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$_id.largeCategory",
+          smallCategories: {
+            $push: {
+              smallCategory: "$_id.smallCategory",
+              stores: "$stores",
+            }
+          }
         }
       }
-    }
-  },
-  {
-    $group: {
-      _id: "$_id.largeCategory",
-      smallCategories: {
-        $push: {
-          smallCategory: "$_id.smallCategory",
-          stores: "$stores"
-        }
-      }
-    }
-  }
-]);
+    ]);
 ```
 </details>
 

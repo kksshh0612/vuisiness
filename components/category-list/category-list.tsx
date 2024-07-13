@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-// 근처 상점 데이터를 props로 받아서 대분류명, 소분류명을 보여주는 컴포넌트
+// Component: 근처 상점 데이터를 props로 받아서 대분류명, 소분류명 리스트 표시
 export default function CategoryList({ nearbyComDistrict }) {
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedLargeCategory, setSelectedLargeCategory] = useState();
   const [selectedSmallCategory, setSelectedSmallCategory] = useState();
 
   return (
@@ -14,42 +14,67 @@ export default function CategoryList({ nearbyComDistrict }) {
         <label className={"w-full mb-3 font-semibold"}>대분류</label>
         <div className={"w-full h-[4rem] overflow-x-auto"}>
           <div className={"flex flex-row gap-2"}>
-            {nearbyComDistrict?.map((nearbyComDistrictItem, idx) => (
-              <div
-                className={
-                  "hover:text-white cursor-pointer hover:font-semibold hover:bg-primary hover:border-2 min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 border-primary rounded-2xl"
-                }
-                key={idx}
-                onClick={() => {
-                  console.log(nearbyComDistrictItem);
-                  setSelectedCategory(nearbyComDistrictItem);
-                }}
-              >
-                {nearbyComDistrictItem._id}
-              </div>
-            ))}
+            {nearbyComDistrict?.map((nearbyComDistrictItem, idx) => {
+              const isSelected =
+                selectedLargeCategory?._id === nearbyComDistrictItem._id;
+              return (
+                <div
+                  className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
+                    ${
+                      isSelected
+                        ? "bg-primary text-white font-semibold border-primary"
+                        : "border-primary"
+                    }
+                    ${
+                      !isSelected &&
+                      "hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
+                    }`}
+                  key={idx}
+                  onClick={() => {
+                    console.log(nearbyComDistrictItem);
+                    setSelectedLargeCategory(nearbyComDistrictItem);
+                  }}
+                >
+                  {nearbyComDistrictItem._id}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
       {/* 소분류 */}
-      {selectedCategory && (
+      {selectedLargeCategory && (
         <div className={"w-full mb-3"}>
           <label className={"w-full mb-3 font-semibold"}>소분류</label>
           <div className={"w-full h-[4rem] overflow-auto"}>
             <div className={"flex flex-row gap-2"}>
-              {selectedCategory.smallCategories?.map((smallCategoryItem) => (
-                <div
-                  className={
-                    "cursor-pointer hover:text-white hover:font-semibold hover:bg-primary hover:border-2 min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 border-primary rounded-2xl"
-                  }
-                  key={smallCategoryItem.smallCategory}
-                  onClick={() => {
-                    setSelectedSmallCategory(smallCategoryItem);
-                  }}
-                >
-                  {smallCategoryItem.smallCategory}
-                </div>
-              ))}
+              {selectedLargeCategory.smallCategories?.map(
+                (smallCategoryItem) => {
+                  const isSelected =
+                    selectedSmallCategory?.smallCategory ===
+                    smallCategoryItem.smallCategory;
+                  return (
+                    <div
+                      className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
+                        ${
+                          isSelected
+                            ? "bg-primary text-white font-semibold border-primary"
+                            : "border-primary"
+                        }
+                        ${
+                          !isSelected &&
+                          "hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
+                        }`}
+                      key={smallCategoryItem.smallCategory}
+                      onClick={() => {
+                        setSelectedSmallCategory(smallCategoryItem);
+                      }}
+                    >
+                      {smallCategoryItem.smallCategory}
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>

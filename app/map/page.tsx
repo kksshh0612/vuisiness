@@ -6,7 +6,7 @@ import { getNearbyComDistrict } from "@/_actions/getNearbyComDistrict";
 import TopCommercialDistrictChart from "../../components/top-commercial-district-chart";
 import PopulationChart from "@/components/population-chart";
 import SalesByDemographicsChart from "@/components/sales-by-demographics-chart";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   centerPositionState,
   hangjeongDongState,
@@ -22,7 +22,7 @@ import RestaurantCountSalesCorrelationChart from "@/components/restaurant-count-
 export default function MapPage() {
   const [centerPosition, setCenterPosition] =
     useRecoilState(centerPositionState);
-  const setHangjeongDong = useSetRecoilState(hangjeongDongState);
+  const [hangjeongDong, setHangjeongDong] = useRecoilState(hangjeongDongState);
   const setNearbyComDistrict = useSetRecoilState(nearbyComDistrictState);
   const [selectedAgeIdx, setSelectedAgeIdx] = useState();
   const [selectedGenderIdx, setSelectedGenderIdx] = useState();
@@ -54,13 +54,17 @@ export default function MapPage() {
           centerPosition
         );
         if (regionMetaData) {
-          setHangjeongDong(regionMetaData.documents[1]);
+          const newHangjeongDong = regionMetaData.documents[1];
+          // 기존 hangjeongDong 값과 비교하여 값이 변경되었을 때만 업데이트
+          if (!hangjeongDong || hangjeongDong.code !== newHangjeongDong.code) {
+            setHangjeongDong(newHangjeongDong);
+          }
         } else {
           console.error(error);
         }
       })();
     }
-  }, [centerPosition, setHangjeongDong]);
+  }, [centerPosition, hangjeongDong, setHangjeongDong]);
 
   // 중심 위치가 변경될 때마다 주변 상권 정보 가져옴
   useEffect(() => {

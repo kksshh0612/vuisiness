@@ -1,7 +1,10 @@
+import { nearbyComDistrictState } from "@/recoil/atoms";
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
 
-// Component: 근처 상점 데이터를 props로 받아서 대분류명, 소분류명 리스트 표시
-export default function CategoryList({ nearbyComDistrict }) {
+// Component: 근처 상점 데이터를 대분류명, 소분류명으로 분류
+export default function CategoryList() {
+  const nearbyComDistrict = useRecoilValue(nearbyComDistrictState);
   const [selectedLargeCategory, setSelectedLargeCategory] = useState();
   const [selectedSmallCategory, setSelectedSmallCategory] = useState();
 
@@ -22,12 +25,8 @@ export default function CategoryList({ nearbyComDistrict }) {
                   className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
                     ${
                       isSelected
-                        ? "bg-primary text-white font-semibold border-primary"
-                        : "border-primary"
-                    }
-                    ${
-                      !isSelected &&
-                      "hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
+                        ? "text-white font-semibold border-primary bg-[#a78bfa]"
+                        : "border-primary hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
                     }`}
                   key={idx}
                   onClick={() => {
@@ -58,12 +57,8 @@ export default function CategoryList({ nearbyComDistrict }) {
                       className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
                         ${
                           isSelected
-                            ? "bg-primary text-white font-semibold border-primary"
-                            : "border-primary"
-                        }
-                        ${
-                          !isSelected &&
-                          "hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
+                            ? "text-white font-semibold border-primary bg-[#a78bfa]"
+                            : "border-primary hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
                         }`}
                       key={smallCategoryItem.smallCategory}
                       onClick={() => {

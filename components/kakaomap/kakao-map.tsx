@@ -1,12 +1,15 @@
 "use client";
 
-import { useRecoilState } from "recoil";
-import { centerPositionState } from "@/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { centerPositionState } from "@/recoil/atoms";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import useKakaoLoader from "@/components/kakao-loader/use-kakao-loader";
+import { nearbyStoresSelector } from "@/recoil/selector";
 
-export default function KakaoMap({ markerItems }) {
+export default function KakaoMap() {
   useKakaoLoader();
+
+  const markerItems = useRecoilValue(nearbyStoresSelector);
   const [centerPosition, setCenterPosition] =
     useRecoilState(centerPositionState);
 

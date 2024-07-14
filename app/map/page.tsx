@@ -1,14 +1,18 @@
 "use client";
 
 import KakaoMap from "@/components/kakaomap/kakao-map";
-import { IStore } from "@/types/commercial_district";
 import { getKakaoCoordsToDistrict } from "@/components/region-info/get-coords2district";
-import { getNearbyComDistrict } from "@/_actions/commercial_district/getNearbyComDistrict";
+import { getNearbyComDistrict } from "@/_actions/getNearbyComDistrict";
 import TopCommercialDistrictChart from "../../components/top-commercial-district-chart";
 import PopulationChart from "@/components/population-chart";
 import SalesByDemographicsChart from "@/components/sales-by-demographics-chart";
-import { useRecoilState } from "recoil";
-import { centerPositionState, hangjeongDongState } from "@/atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  centerPositionState,
+  hangjeongDongState,
+  nearbyComDistrictState,
+} from "@/recoil/atoms";
+import { nearbyStoresSelector } from "@/recoil/selector";
 import { useEffect, useState } from "react";
 import CategoryList from "../../components/category-list/category-list";
 import PopulationRestaurantsChart from "@/components/popular-restaurants-chart";
@@ -18,9 +22,8 @@ import RestaurantCountSalesCorrelationChart from "@/components/restaurant-count-
 export default function MapPage() {
   const [centerPosition, setCenterPosition] =
     useRecoilState(centerPositionState);
-  const [hangjeongDong, setHangjeongDong] = useRecoilState(hangjeongDongState);
-  const [nearbyComDistrict, setNearbyComDistrict] = useState([]);
-  const [nearbyStores, setNearbyStores] = useState([]);
+  const setHangjeongDong = useSetRecoilState(hangjeongDongState);
+  const setNearbyComDistrict = useSetRecoilState(nearbyComDistrictState);
   const [selectedAgeIdx, setSelectedAgeIdx] = useState();
   const [selectedGenderIdx, setSelectedGenderIdx] = useState();
 
@@ -68,34 +71,26 @@ export default function MapPage() {
 
         if (nearbyComDistrictData) {
           setNearbyComDistrict(nearbyComDistrictData);
-          // 데이터를 평탄화(flatten)하여 저장
-          const storesData: IStore[] = nearbyComDistrictData.flatMap(
-            (category: any) =>
-              category.smallCategories.flatMap(
-                (smallCategory: any) => smallCategory.stores
-              )
-          );
-          setNearbyStores(storesData);
         } else {
           console.error(errMsg);
         }
       })();
     }
-  }, [centerPosition]);
+  }, [centerPosition, setNearbyComDistrict]);
 
   return (
     <>
       {/* 지도 표시 영역 */}
-      <KakaoMap markerItems={nearbyStores} />
+      <KakaoMap />
       {/* 통계 영역 */}
       <div
         className={
           "ContentWrapper bg-white p-4 absolute bottom-0 z-20 w-full h-[20rem]"
         }
       >
-        <CategoryList nearbyComDistrict={nearbyComDistrict} />
-        <WeekendsPopularAreasByComDistrictChart />
+        <CategoryList />
         <TopCommercialDistrictChart />
+        {/* <WeekendsPopularAreasByComDistrictChart />
         <PopulationRestaurantsChart />
         <PopulationChart
           setSelectedAgeIdx={setSelectedAgeIdx}
@@ -105,7 +100,7 @@ export default function MapPage() {
           selectedAgeIdx={selectedAgeIdx}
           selectedGenderIdx={selectedGenderIdx}
         />
-        <RestaurantCountSalesCorrelationChart />
+        <RestaurantCountSalesCorrelationChart /> */}
       </div>
     </>
   );

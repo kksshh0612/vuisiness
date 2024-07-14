@@ -1,7 +1,7 @@
 "use client";
 
 import DoughnutChart from "@/components/chart/doughnut-chart";
-import { hangjeongDongState } from "@/atoms";
+import { hangjeongDongState } from "@/recoil/atoms";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { getNearbyTopComCategories } from "@/_actions/getNearbyTopComCategories";

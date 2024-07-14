@@ -12,6 +12,11 @@ export const hangjeongDongState = atom({
   default: null,
 });
 
+export const nearbyComDistrictState = atom({
+  key: "nearbyComDistrictState",
+  default: [],
+});
+
 // 근처 상점
 export const nearbyStoresState = atom({
   key: "nearbyStoresState",

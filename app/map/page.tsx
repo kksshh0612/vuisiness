@@ -12,8 +12,7 @@ import {
   hangjeongDongState,
   nearbyComDistrictState,
 } from "@/recoil/atoms";
-import { nearbyStoresSelector } from "@/recoil/selector";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import CategoryList from "../../components/category-list/category-list";
 import PopulationRestaurantsChart from "@/components/popular-restaurants-chart";
 import WeekendsPopularAreasByComDistrictChart from "../../components/weekends-popular-areas-by-commercial-district";
@@ -48,7 +47,7 @@ export default function MapPage() {
 
   // 중심 위치가 변경될 때마다 행정동 정보 받아옴
   useEffect(() => {
-    if (centerPosition) {
+    if (centerPosition.lat !== null && centerPosition.lng !== null) {
       (async () => {
         const { data: regionMetaData, error } = await getKakaoCoordsToDistrict(
           centerPosition
@@ -68,11 +67,10 @@ export default function MapPage() {
 
   // 중심 위치가 변경될 때마다 주변 상권 정보 가져옴
   useEffect(() => {
-    if (centerPosition) {
+    if (centerPosition.lat !== null && centerPosition.lng !== null) {
       (async () => {
         const { data: nearbyComDistrictData, errMsg } =
           await getNearbyComDistrict(centerPosition);
-
         if (nearbyComDistrictData) {
           setNearbyComDistrict(nearbyComDistrictData);
         } else {
@@ -86,7 +84,6 @@ export default function MapPage() {
     <>
       {/* 지도 표시 영역 */}
       <KakaoMap />
-      {/* 통계 영역 */}
       <div
         className={
           "ContentWrapper bg-white p-4 absolute bottom-0 z-20 w-full h-[20rem]"
@@ -94,17 +91,17 @@ export default function MapPage() {
       >
         <CategoryList />
         <TopCommercialDistrictChart />
+        {/* <PopulationRestaurantsChart /> */}
         {/* <WeekendsPopularAreasByComDistrictChart />
-        <PopulationRestaurantsChart />
-        <PopulationChart
-          setSelectedAgeIdx={setSelectedAgeIdx}
-          setSelectedGenderIdx={setSelectedGenderIdx}
-        />
-        <SalesByDemographicsChart
-          selectedAgeIdx={selectedAgeIdx}
-          selectedGenderIdx={selectedGenderIdx}
-        />
-        <RestaurantCountSalesCorrelationChart /> */}
+          <PopulationChart
+            setSelectedAgeIdx={setSelectedAgeIdx}
+            setSelectedGenderIdx={setSelectedGenderIdx}
+          />
+          <SalesByDemographicsChart
+            selectedAgeIdx={selectedAgeIdx}
+            selectedGenderIdx={selectedGenderIdx}
+          />
+          <RestaurantCountSalesCorrelationChart /> */}
       </div>
     </>
   );

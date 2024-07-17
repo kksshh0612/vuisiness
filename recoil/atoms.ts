@@ -3,7 +3,7 @@ import { atom } from "recoil";
 // 중심 마커 위치
 export const centerPositionState = atom({
   key: "centerPositionState",
-  default: { lat: 37.5665, lng: 126.978 }, // 초기값 설정 (서울의 좌표)
+  default: { lat: null, lng: null }, // 초기값 설정 (서울의 좌표)
 });
 
 // 행정동

@@ -1,10 +1,12 @@
 "use client";
 
 import { useRecoilState, useRecoilValue } from "recoil";
-import { centerPositionState } from "@/recoil/atoms";
+import { centerPositionState, hangjeongDongState } from "@/recoil/atoms";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import useKakaoLoader from "@/components/kakao-loader/use-kakao-loader";
 import { nearbyStoresSelector } from "@/recoil/selector";
+import { useEffect } from "react";
+import { getKakaoCoordsToDistrict } from "../region-info/get-coords2district";
 
 export default function KakaoMap() {
   useKakaoLoader();
@@ -12,6 +14,47 @@ export default function KakaoMap() {
   const markerItems = useRecoilValue(nearbyStoresSelector);
   const [centerPosition, setCenterPosition] =
     useRecoilState(centerPositionState);
+  const [hangjeongDong, setHangjeongDong] = useRecoilState(hangjeongDongState);
+
+  // 현재 위치 받아옴
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCenterPosition({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error obtaining location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, [setCenterPosition]);
+
+  // 중심 위치가 변경될 때마다 행정동 정보 받아옴
+  useEffect(() => {
+    if (centerPosition.lat !== null && centerPosition.lng !== null) {
+      (async () => {
+        const { data: regionMetaData, error } = await getKakaoCoordsToDistrict(
+          centerPosition
+        );
+        if (regionMetaData) {
+          const newHangjeongDong = regionMetaData.documents[1];
+          // 기존 hangjeongDong 값과 비교하여 값이 변경되었을 때만 업데이트
+          if (!hangjeongDong || hangjeongDong.code !== newHangjeongDong.code) {
+            console.log("🚀 ~ hangjeongDong:", hangjeongDong);
+            setHangjeongDong(newHangjeongDong);
+          }
+        } else {
+          console.error(error);
+        }
+      })();
+    }
+  }, [centerPosition, hangjeongDong, setHangjeongDong]);
 
   return (
     <Map

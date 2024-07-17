@@ -1,12 +1,31 @@
-import { nearbyComDistrictState } from "@/recoil/atoms";
-import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { getNearbyComDistrict } from "@/_actions/getNearbyComDistrict";
+import { centerPositionState, nearbyComDistrictState } from "@/recoil/atoms";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 // Component: 근처 상점 데이터를 대분류명, 소분류명으로 분류
 export default function CategoryList() {
   const nearbyComDistrict = useRecoilValue(nearbyComDistrictState);
   const [selectedLargeCategory, setSelectedLargeCategory] = useState();
   const [selectedSmallCategory, setSelectedSmallCategory] = useState();
+  const [centerPosition, setCenterPosition] =
+    useRecoilState(centerPositionState);
+  const setNearbyComDistrict = useSetRecoilState(nearbyComDistrictState);
+
+  // 중심 위치가 변경될 때마다 주변 상권 정보 가져옴
+  useEffect(() => {
+    if (centerPosition.lat !== null && centerPosition.lng !== null) {
+      (async () => {
+        const { data: nearbyComDistrictData, errMsg } =
+          await getNearbyComDistrict(centerPosition);
+        if (nearbyComDistrictData) {
+          setNearbyComDistrict(nearbyComDistrictData);
+        } else {
+          console.error(errMsg);
+        }
+      })();
+    }
+  }, [centerPosition, setNearbyComDistrict]);
 
   return (
     <>

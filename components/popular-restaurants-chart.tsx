@@ -1,15 +1,16 @@
 import { getPopularRestaurants } from "@/_actions/getPopularRestaurants";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { hangjeongDongState } from "@/atoms";
 import { concatHangjeongDongName } from "@/utils/concat-hangjeong-dong-name";
 import { sliceHangjeongDongCode } from "@/utils/slice-hangjeong-dong-code";
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 import RadarChart from "@/components/chart/radar-chart";
 
 // 평일 점심 인기 식당 정보 차트
-export default function PopulationRestaurantsChart() {
+export default function PopularRestaurantsChart() {
   const hangjeongDong = useRecoilValue(hangjeongDongState);
   const [popularRestaurants, setPopularRestaurants] = useState([]);
+
   useEffect(() => {
     (async () => {
       if (hangjeongDong) {

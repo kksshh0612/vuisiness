@@ -1,7 +1,7 @@
 "use client";
 
 import { getSalesByDemographics } from "@/_actions/getSalesByDemographics";
-import { hangjeongDongState } from "@/atoms";
+import { hangjeongDongState } from "@/recoil/atoms";
 import {
   concatHangjeongDongName,
   extractSiGunGuName,

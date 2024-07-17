@@ -1,7 +1,7 @@
 "use client";
 
 import ScatterChart from "@/components/chart/scatter-chart";
-import { hangjeongDongState } from "@/atoms";
+import { hangjeongDongState } from "@/recoil/atoms";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { getRestaurantCountSales } from "@/_actions/getRestaurantCountSales";

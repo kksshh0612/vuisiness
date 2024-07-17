@@ -1,7 +1,7 @@
 import { getPopularRestaurants } from "@/_actions/getPopularRestaurants";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { hangjeongDongState } from "@/atoms";
+import { hangjeongDongState } from "@/recoil/atoms";
 import { concatHangjeongDongName } from "@/utils/concat-hangjeong-dong-name";
 import { sliceHangjeongDongCode } from "@/utils/slice-hangjeong-dong-code";
 import RadarChart from "@/components/chart/radar-chart";

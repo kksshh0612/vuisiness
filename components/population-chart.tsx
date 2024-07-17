@@ -3,7 +3,7 @@ import BarChart from "./chart/bar-chart";
 import DoubleBarChart from "./chart/double-bar-chart";
 import { SetStateAction, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { hangjeongDongState } from "@/atoms";
+import { hangjeongDongState } from "@/recoil/atoms";
 import { sliceHangjeongDongCode } from "@/utils/slice-hangjeong-dong-code";
 import { concatHangjeongDongName } from "@/utils/concat-hangjeong-dong-name";
 import { getPopulationByGenderAge } from "@/_actions/getPopulationByGenderAge";

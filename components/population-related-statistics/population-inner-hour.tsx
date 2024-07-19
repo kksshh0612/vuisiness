@@ -7,33 +7,44 @@ import {
   selectedHourIdxState,
 } from "@/recoil/atoms";
 import { getPopulationByGenderAge } from "@/_actions/getPopulationByGenderAge";
-import { hangjeongDongCodeSelector } from "@/recoil/selector";
-import { concatHangjeongDongName } from "@/utils/concat-hangjeong-dong-name";
+import {
+  hangjeongDongCodeSelector,
+  hangjeongDongNameSelector,
+} from "@/recoil/selector";
 
+// 선택된 시간대의 남녀 인구수 차트
 export default function PopulationInnerHour() {
   const selectedHourIdx = useRecoilValue(selectedHourIdxState);
   const setSelectedAgeIdx = useSetRecoilState(selectedAgeIdxState);
   const setSelectedGenderIdx = useSetRecoilState(selectedGenderIdxState);
   const hangjeongDongCode = useRecoilValue(hangjeongDongCodeSelector);
+  const hangjeongDongName = useRecoilValue(hangjeongDongNameSelector);
   const [populationByGenderAge, setPopulationByGenderAge] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 생활 인구 그래프 특정 시간대 bar 요소 클릭시, 해당 시간대 나이대별 남녀 비율
+  // GET: 생활 인구 그래프 특정 시간대 bar 요소 클릭시, 해당 시간대 나이대별 남녀 비율
   useEffect(() => {
     (async () => {
       if (selectedHourIdx) {
+        setIsLoading(true);
         const { data: populationByGenderAgeData, error } =
           await getPopulationByGenderAge(hangjeongDongCode, selectedHourIdx);
         setPopulationByGenderAge(populationByGenderAgeData);
+        setIsLoading(false);
       }
     })();
   }, [selectedHourIdx, hangjeongDongCode]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
+    <section className={"PopulationChartWrapper my-6 w-full overflow-auto"}>
       {populationByGenderAge ? (
-        <section className={"PopulationChartWrapper my-6 w-full overflow-auto"}>
+        <>
           <label className={"font-semibold mt-[2rem] text-[1.2rem]"}>
-            {/* {concatHangjeongDongName(hangjeongDong)} {day}요일  */}
+            {/* {hangjeongDongName} {day}요일 */}
             {selectedHourIdx}~{selectedHourIdx + 1}시의 생활 인구의 남녀 비율
           </label>
           <div className={"w-full overflow-auto"}>
@@ -51,8 +62,8 @@ export default function PopulationInnerHour() {
               </div>
             </div>
           </div>
-        </section>
+        </>
       ) : null}
-    </>
+    </section>
   );
 }

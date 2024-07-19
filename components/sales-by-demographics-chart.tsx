@@ -5,49 +5,52 @@ import {
   hangjeongDongState,
   selectedAgeIdxState,
   selectedGenderIdxState,
-  selectedHourIdxState,
 } from "@/recoil/atoms";
-import {
-  concatHangjeongDongName,
-  extractSiGunGuName,
-} from "@/utils/concat-hangjeong-dong-name";
 import { translateGender2Code } from "@/utils/translate-gender-to-code";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import PolarAreaChart from "@/components/chart/polararea-chart";
+import {
+  hangjeongDongNameSelector,
+  SiGunGuNameSelector,
+} from "@/recoil/selector";
 
-// // 행정동 내 특정 성별, 나이 카드사용 통계 차트
-// interface ISalesByDemographicsChartProps {
-//   selectedAgeIdx: number;
-//   selectedGenderIdx: string;
-// }
+// 특정 성별, 나이의 카드 사용 금액 차트
 export default function SalesByDemographicsChart() {
   const selectedAgeIdx = useRecoilValue(selectedAgeIdxState);
   const selectedGenderIdx = useRecoilValue(selectedGenderIdxState);
   const [salesByDemographics, setSalesByDemographics] = useState([]);
-  const hangjeongDong = useRecoilValue(hangjeongDongState);
+  const hangjeongDongName = useRecoilValue(hangjeongDongNameSelector);
+  const siGunGuName = useRecoilValue(SiGunGuNameSelector);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (selectedAgeIdx && selectedGenderIdx) {
+        setIsLoading(true);
         const { data: salesByDemographicsData, error } =
           await getSalesByDemographics({
-            siGunGuName: extractSiGunGuName(hangjeongDong),
+            siGunGuName: siGunGuName,
             genderCode: translateGender2Code(selectedGenderIdx),
             ageCode: selectedAgeIdx * 10,
           });
         setSalesByDemographics(salesByDemographicsData);
+        setIsLoading(false);
       }
     })();
-  }, [hangjeongDong, selectedAgeIdx, selectedGenderIdx]);
+  }, [siGunGuName, selectedAgeIdx, selectedGenderIdx]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className={"SalesChartWrapper w-full overflow-auto"}>
       {selectedAgeIdx && selectedGenderIdx && (
         <>
           <label className={"font-semibold my-[2rem] text-[1.2rem]"}>
-            {concatHangjeongDongName(hangjeongDong)}의 {selectedAgeIdx * 10}대
-            {selectedGenderIdx}의 카드 사용 금액 상위
+            {hangjeongDongName}의 {selectedAgeIdx * 10}대{selectedGenderIdx}의
+            카드 사용 금액 상위
           </label>
           <div className="w-full">
             <PolarAreaChart

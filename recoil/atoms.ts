@@ -35,11 +35,11 @@ export const topComDistrictCategoriesState = atom({
 
 export const selectedHourIdxState = atom({
   key: "selectedHourIdx",
-  default: 0,
+  default: null,
 });
 export const selectedAgeIdxState = atom({
   key: "selectedAgeIdx",
-  default: 0,
+  default: null,
 });
 export const selectedGenderIdxState = atom({
   key: "selectedGenderIdx",

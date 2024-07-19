@@ -5,17 +5,16 @@ import TopCommercialDistrictChart from "../../components/top-commercial-district
 import { useRecoilValue } from "recoil";
 import { hangjeongDongState } from "@/recoil/atoms";
 import CategoryList from "../../components/category-list/category-list";
-import PopulationChart from "@/components/population-chart";
+import PopulationChart from "@/components/population-related-statistics/population-by-hour-chart";
 import SalesByDemographicsChart from "@/components/sales-by-demographics-chart";
 import PopulationRestaurantsChart from "@/components/popular-restaurants-chart";
 import WeekendsPopularAreasByComDistrictChart from "../../components/weekends-popular-areas-by-commercial-district";
 import RestaurantCountSalesCorrelationChart from "@/components/restaurant-count-sales-correlation-chart";
+import PopulationRelatedStatistics from "@/components/population-related-statistics/population-related-statistics";
 
 // 지도상 현위치 기반 상권 분석 페이지
 export default function MapPage() {
   const hangjeongDong = useRecoilValue(hangjeongDongState);
-  // const [selectedAgeIdx, setSelectedAgeIdx] = useState();
-  // const [selectedGenderIdx, setSelectedGenderIdx] = useState();
 
   return (
     <>
@@ -28,17 +27,10 @@ export default function MapPage() {
       >
         <CategoryList />
         {hangjeongDong && <TopCommercialDistrictChart />}
-        {/* <PopulationRestaurantsChart /> */}
-        {/* <WeekendsPopularAreasByComDistrictChart />
-          <PopulationChart
-            setSelectedAgeIdx={setSelectedAgeIdx}
-            setSelectedGenderIdx={setSelectedGenderIdx}
-          />
-          <SalesByDemographicsChart
-            selectedAgeIdx={selectedAgeIdx}
-            selectedGenderIdx={selectedGenderIdx}
-          />
-          <RestaurantCountSalesCorrelationChart /> */}
+        {/* {hangjeongDong && <PopulationRestaurantsChart />} */}
+        {/* <WeekendsPopularAreasByComDistrictChart /> */}
+        {hangjeongDong && <PopulationRelatedStatistics />}
+        {/* <RestaurantCountSalesCorrelationChart /> */}
       </div>
     </>
   );

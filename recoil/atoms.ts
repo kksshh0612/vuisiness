@@ -43,5 +43,5 @@ export const selectedAgeIdxState = atom({
 });
 export const selectedGenderIdxState = atom({
   key: "selectedGenderIdx",
-  default: "",
+  default: null,
 });

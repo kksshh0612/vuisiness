@@ -6,8 +6,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 // Component: 근처 상점 데이터를 대분류명, 소분류명으로 분류
 export default function CategoryList() {
   const nearbyComDistrict = useRecoilValue(nearbyComDistrictState);
-  const [selectedLargeCategory, setSelectedLargeCategory] = useState();
-  const [selectedSmallCategory, setSelectedSmallCategory] = useState();
+  const [selectedLargeCategory, setSelectedLargeCategory] = useState({});
+  const [selectedSmallCategory, setSelectedSmallCategory] = useState({});
   const centerPosition = useRecoilValue(centerPositionState);
   const setNearbyComDistrict = useSetRecoilState(nearbyComDistrictState);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +15,8 @@ export default function CategoryList() {
   // 중심 위치가 변경될 때마다 주변 상권 정보 가져옴
   useEffect(() => {
     if (centerPosition.lat !== null && centerPosition.lng !== null) {
+      setSelectedLargeCategory({});
+      setSelectedSmallCategory({});
       (async () => {
         setIsLoading(true);
         const { data: nearbyComDistrictData, errMsg } =
@@ -55,10 +57,6 @@ export default function CategoryList() {
                     }`}
                   key={idx}
                   onClick={() => {
-                    console.log(
-                      // "🚀 ~ {nearbyComDistrict?.map ~ nearbyComDistrictItem:",
-                      nearbyComDistrictItem
-                    );
                     setSelectedLargeCategory(nearbyComDistrictItem);
                   }}
                 >

@@ -1,31 +1,37 @@
 import { getNearbyComDistrict } from "@/_actions/getNearbyComDistrict";
 import { centerPositionState, nearbyComDistrictState } from "@/recoil/atoms";
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 // Component: 근처 상점 데이터를 대분류명, 소분류명으로 분류
 export default function CategoryList() {
   const nearbyComDistrict = useRecoilValue(nearbyComDistrictState);
   const [selectedLargeCategory, setSelectedLargeCategory] = useState();
   const [selectedSmallCategory, setSelectedSmallCategory] = useState();
-  const [centerPosition, setCenterPosition] =
-    useRecoilState(centerPositionState);
+  const centerPosition = useRecoilValue(centerPositionState);
   const setNearbyComDistrict = useSetRecoilState(nearbyComDistrictState);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 중심 위치가 변경될 때마다 주변 상권 정보 가져옴
   useEffect(() => {
     if (centerPosition.lat !== null && centerPosition.lng !== null) {
       (async () => {
+        setIsLoading(true);
         const { data: nearbyComDistrictData, errMsg } =
           await getNearbyComDistrict(centerPosition);
         if (nearbyComDistrictData) {
           setNearbyComDistrict(nearbyComDistrictData);
+          setIsLoading(false);
         } else {
           console.error(errMsg);
         }
       })();
     }
   }, [centerPosition, setNearbyComDistrict]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -44,12 +50,15 @@ export default function CategoryList() {
                   className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
                     ${
                       isSelected
-                        ? "text-white font-semibold border-primary bg-[#a78bfa]"
+                        ? "text-white font-semibold border-primary bg-primary"
                         : "border-primary hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
                     }`}
                   key={idx}
                   onClick={() => {
-                    console.log(nearbyComDistrictItem);
+                    console.log(
+                      // "🚀 ~ {nearbyComDistrict?.map ~ nearbyComDistrictItem:",
+                      nearbyComDistrictItem
+                    );
                     setSelectedLargeCategory(nearbyComDistrictItem);
                   }}
                 >
@@ -76,7 +85,7 @@ export default function CategoryList() {
                       className={`cursor-pointer min-w-fit p-[0.7rem] h-10 flex flex-row justify-center items-center bg-white border-2 rounded-2xl
                         ${
                           isSelected
-                            ? "text-white font-semibold border-primary bg-[#a78bfa]"
+                            ? "text-white font-semibold border-primary bg-primary"
                             : "border-primary hover:text-white hover:font-semibold hover:bg-primary hover:border-2"
                         }`}
                       key={smallCategoryItem.smallCategory}

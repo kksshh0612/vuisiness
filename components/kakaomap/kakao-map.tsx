@@ -1,13 +1,20 @@
 "use client";
 
-import { useRecoilState, useRecoilValue } from "recoil";
-import { centerPositionState, hangjeongDongState } from "@/recoil/atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  centerPositionState,
+  hangjeongDongState,
+  selectedAgeIdxState,
+  selectedGenderIdxState,
+  selectedHourIdxState,
+} from "@/recoil/atoms";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import useKakaoLoader from "@/components/kakao-loader/use-kakao-loader";
 import { nearbyStoresSelector } from "@/recoil/selector";
 import { useEffect } from "react";
 import { getKakaoCoordsToDistrict } from "../region-info/get-coords2district";
 
+// 카카오맵
 export default function KakaoMap() {
   useKakaoLoader();
 
@@ -15,6 +22,9 @@ export default function KakaoMap() {
   const [centerPosition, setCenterPosition] =
     useRecoilState(centerPositionState);
   const [hangjeongDong, setHangjeongDong] = useRecoilState(hangjeongDongState);
+  const setSelectedHourIdx = useSetRecoilState(selectedHourIdxState);
+  const setSelectedAgeIdx = useSetRecoilState(selectedAgeIdxState);
+  const setSelectedGenderIdx = useSetRecoilState(selectedGenderIdxState);
 
   // 현재 위치 받아옴
   useEffect(() => {
@@ -46,15 +56,24 @@ export default function KakaoMap() {
           const newHangjeongDong = regionMetaData.documents[1];
           // 기존 hangjeongDong 값과 비교하여 값이 변경되었을 때만 업데이트
           if (!hangjeongDong || hangjeongDong.code !== newHangjeongDong.code) {
-            console.log("🚀 ~ hangjeongDong:", hangjeongDong);
             setHangjeongDong(newHangjeongDong);
+            setSelectedHourIdx(null);
+            setSelectedAgeIdx(null);
+            setSelectedGenderIdx(null);
           }
         } else {
           console.error(error);
         }
       })();
     }
-  }, [centerPosition, hangjeongDong, setHangjeongDong]);
+  }, [
+    centerPosition,
+    hangjeongDong,
+    setHangjeongDong,
+    setSelectedHourIdx,
+    setSelectedAgeIdx,
+    setSelectedGenderIdx,
+  ]);
 
   return (
     <Map

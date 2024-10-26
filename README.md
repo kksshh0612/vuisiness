@@ -40,7 +40,9 @@ Vuisiness
 ###### 공공 빅데이터 출처
 
 [소상공인시장진흥공단\_상가(상권)정보 - 공공데이터포털](https://www.data.go.kr/data/15083033/fileData.do)
+<br />
 [행정동 단위 서울 생활인구(내국인) - 서울 열린데이터 광장](https://data.seoul.go.kr/dataList/OA-14991/S/1/datasetView.do)
+<br />
 [성별/연령대 별 BC카드 결제 금액 통계 데이터 - KT 통신 빅데이터 플랫폼](https://www.bigdata-telecom.kr/invoke/SOKBP0000/?ver=3.0)
 
 ###### 시작 가이드
